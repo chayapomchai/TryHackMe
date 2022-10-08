@@ -1,19 +1,24 @@
 import requests
-print(requests.get('https://xshot.winwin.co.th/Main'))
+#print(requests.get('https://xshot.winwin.co.th/Main'))
 from requests import get
-print("test")
-print(get('https://tryhackme.com/room/mrrobot/index'))
-print(get('https://tryhackme.com/index'))
-print(get('https://tryhackme.com/room/mrrobot/images'))
-print(get('https://tryhackme.com/images'))
+import pandas as pd
+import time 
 file = open("/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt")
-print(type(get('https://xshot.winwin.co.th/Main')))
-print(get('https://tryhackme.com/room/mrrobot/# directory-list-2.3-medium.txt').status_code)
-print(type(get('https://tryhackme.com/room/mrrobot/# directory-list-2.3-medium.txt').status_code))
-print(get('https://tryhackme.com/room/mrrobot/# directory-list-2.3-medium.txt').status_code == get('https://xshot.winwin.co.th/Main').status_code)
+f = pd.DataFrame(file,columns=['name'])
+#print(f)
+print(len(f))
 print("start here")
-for i in file:
-#    print(f"{get(f'https://tryhackme.com/room/mrrobot/{i}')} from {i}")
-    if get(f'https://tryhackme.com/room/mrrobot/{i}').status_code == get('https://xshot.winwin.co.th/Main').status_code:
-        print(i)
-        print("yes")
+a = 'http://10.10.41.157/'
+l = []
+def status(x):
+    x = get(x).status_code
+    return x
+print(status(a))
+for i in f.loc[14:200]['name']:
+    print(f"{get(a+i)} from {i}")
+    if status(a+i) == 429:
+        time.sleep(4)
+        print(f"{get(a+i)} from {i}")
+    if status(a+i) == 200:
+        l.append(i)
+print(l)
