@@ -23,5 +23,5 @@ def status(x):
 print("start here")
 for i in file:
     rdurl = url + i
-    if get(rdurl).status_code == 200:
+    if status(rdurl) == 200:
         print(rdurl)
